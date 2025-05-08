@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="RICL: Adding In-Context Adaptability to Pre-Trained Vision-Language-Action Models">
+  <meta name="keywords" content="RAG, Vision-Language-Action models, VLA, In-Context Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RICL: Adding In-Context Adaptability to Pre-Trained Vision-Language-Action Models</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/crown.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://ricl-vla.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">RICL: Adding In-Context Adaptability to Pre-Trained Vision-Language-Action Models</h1>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF -->
+              <span class="link-block">
+                <a href="static/docs/RICL.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>PDF</span>
+                </a>
+              </span>
+
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ricl-vla/ricl_openpi"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (and model, datasets)</span>
+                  </a>
+              </span>
+
+              <!-- OpenReview Link. -->
+              <span class="link-block">
+                <a href="https://openreview.net/forum?id=6AASPlloSt"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      📎
+                  </span>
+                  <span>OpenReview</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Multi-task Vision-Language-Action (VLA) models have recently demonstrated increasing promise as generalist foundation models for robotics, achieving non-trivial performance out of the box on new tasks in new environments. However, for such models to be truly useful, an end user must have easy means to teach them to improve. For language and vision models, the emergent ability to perform in-context learning (ICL) has proven to be a versatile and highly useful interface to easily teach new tasks with no parameter finetuning. Unfortunately, VLAs pre-trained with imitation learning objectives do not naturally acquire ICL abilities. In this paper, we demonstrate that, with the right finetuning recipe and a small robot demonstration dataset, it is possible to inject in-context adaptability post hoc into such a VLA. After retraining for in-context learning (RICL), our system permits an end user to provide a small number (10-20) of demonstrations for a new task. RICL then fetches the most relevant portions of those demonstrations into the VLA context to exploit ICL, performing the new task and boosting task performance. We apply RICL to inject ICL into the π₀-FAST VLA, and show that it permits large in-context improvements for a variety of new manipulation tasks with only 20 demonstrations per task, without any parameter updates. When parameter updates on the target task demonstrations is possible, RICL finetuning further boosts performance. We release code and model weights for RICL-π₀-FAST alongside the paper to enable, for the first time, a simple in-context learning interface for new manipulation tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Architecture -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Architecture of RICL-π₀</h2>
+        <embed src="static/images/ricl-arch.pdf" alt="RICL-π₀-FAST-DROID architecture" type="application/pdf" width="100%" height="500px">
+      </div>
+    </div>
+    <!--/ Architecture -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+
+    <!-- Dropdown to select results in which problem setting -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">RICL Adds In-Context Adaptability to New Tasks for π₀</h2>
+        <ol style="text-align: left;">
+          <li>With only 20 demonstrations per new task, and without training on these demonstrations, RICL-π₀-FAST-DROID demonstrates large in-context improvements over π₀-FAST-DROID solely by utilizing RAG + ICL.</li>
+          <li>These tasks include unseen objects, novel motions, and new scenes.</li>
+          <li>Below are comparisons of π₀ and RICL-π₀ for various tasks.</li>
+        </ol>
+        <br>
+
+        <!-- Task 1: pick up the poke ball and put it in the tray -->
+        <h4 class="title is-4 has-text-centered">Task: Pick up the poke ball and put it in the tray</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/pokeball_pi0.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/pokeball_ricl.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ picks up the duck instead of the poke ball (language grounding issue). RICL-π₀ completes the task.</p>
+        <hr>
+
+        <!-- Task 2: move the idli plate to the sink -->
+        <h4 class="title is-4 has-text-centered">Task: Move the idli plate to the sink</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/sink-idli-plate_pi0.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/sink-idli-plate_ricl.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ struggles with the grasp and motion for this novel object (adaptation issue) or drops the apple in the sink (language grounding issue). RICL-π₀ completes the task.</p>
+        <hr>
+
+        <!-- Task 3: use the squeegee to clean the counter -->
+        <h4 class="title is-4 has-text-centered">Task: Use the squeegee to clean the counter</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/sink-squeegee_pi0.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/sink-squeegee_ricl.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ cannot figure out the grasp or the motion (adaptation issue). RICL-π₀ completes the task.</p>
+        <hr>
+
+        <!-- Task 4: move the idli plate to the right -->
+        <h4 class="title is-4 has-text-centered">Task: Move the idli plate to the right</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/plate_pi0_idli.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/plate_ricl_idli.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ moves the apple (language grounding issue). RICL-π₀ completes the task.</p>
+        <hr>
+
+        <!-- Task 5: move the squeegee to the right and try to drag it -->
+        <h4 class="title is-4 has-text-centered">Task: Move the squeegee to the right and try to drag it</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/squeegee_pi0.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/squeegee_ricl.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ moves the duck instead of the squeegee (language grounding issue). RICL-π₀ completes the task.</p>
+        <hr>
+
+        <!-- Task 6: push the lever on the toaster -->
+        <h4 class="title is-4 has-text-centered">Task: Push the lever on the toaster</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/lever_pi0.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/lever_ricl.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ cannot figure out the precise location or the grasp (adaptation issue at the long tail of seen tasks). RICL-π₀ completes the task.</p>
+        <hr>
+
+        <!-- Task 7: open the door of the bottom shelf -->
+        <h4 class="title is-4 has-text-centered">Task: Open the door of the bottom shelf</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/door_pi0.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/door_ricl.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ cannot figure out the novel motion to avoid the top door which acts as an obstacle (adaptation issue, again, at the long tail of seen tasks). RICL-π₀ completes the task.</p>
+        <hr>
+
+        <!-- Task 8: pick up the bagel and put it in the toaster -->
+        <h4 class="title is-4 has-text-centered">Task: Pick up the bagel and put it in the toaster</h4>
+        <div class="side-by-side-videos-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/bagel_pi0.mp4" controls></video>
+          </div>
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID</strong></p>
+            <video src="static/videos_cropped/bagel_ricl.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">π₀ struggles with the grasp and motion for this novel object (adaptation issue). RICL-π₀ completes the task.</p>
+        <br>
+      </div>
+    </div>
+    <!--/ Dropdown to select results in which problem setting -->
+
+    <!-- Dropdown to select results in which problem setting -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">RICL-π₀-Finetune performs the best (> π₀-Finetune)</h2>
+        <ol style="text-align: left;">
+          <li>After finetuning like we pretrain, RICL-π₀-FAST-DROID-Finetune performs the best.</li>
+          <li>To view the reactivity and robustness of RICL-π₀-FAST-DROID-Finetune policies under human perturbations, please see the videos below.</li>
+        </ol>
+        <br>
+
+        <!-- Finetune Task 1: pick up the poke ball and put it in the tray -->
+        <h4 class="title is-4 has-text-centered">Task: Pick up the poke ball and put it in the tray</h4>
+        <div class="finetune-video-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID-Finetune</strong></p>
+            <video src="static/videos_cropped/pokeball_ricl_finetune.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">A human perturbs the main object in the scene. Yet, RICL-π₀-FAST-DROID-Finetune completes the task.</p>
+        <hr>
+
+        <!-- Finetune Task 4: move the idli plate to the right -->
+        <h4 class="title is-4 has-text-centered">Task: Move the idli plate to the right</h4>
+        <div class="finetune-video-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID-Finetune</strong></p>
+            <video src="static/videos_cropped/plate_ricl_finetune_idli.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">A human perturbs the main object in the scene. Yet, RICL-π₀-FAST-DROID-Finetune completes the task.</p>
+        <hr>
+
+        <!-- Finetune Task 5: move the squeegee to the right and try to drag it -->
+        <h4 class="title is-4 has-text-centered">Task: Move the squeegee to the right and try to drag it</h4>
+        <div class="finetune-video-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID-Finetune</strong></p>
+            <video src="static/videos_cropped/squeegee_ricl_finetune.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">A human perturbs the main object in the scene. Yet, RICL-π₀-FAST-DROID-Finetune completes the task.</p>
+        <hr>
+
+        <!-- Finetune Task 6: push the lever on the toaster -->
+        <h4 class="title is-4 has-text-centered">Task: Push the lever on the toaster</h4>
+        <div class="finetune-video-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID-Finetune</strong></p>
+            <video src="static/videos_cropped/lever_ricl_finetune.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">A human perturbs the main object in the scene. Yet, RICL-π₀-FAST-DROID-Finetune completes the task.</p>
+        <hr>
+
+        <!-- Finetune Task 7: open the door of the bottom shelf -->
+        <h4 class="title is-4 has-text-centered">Task: Open the door of the bottom shelf</h4>
+        <div class="finetune-video-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID-Finetune</strong></p>
+            <video src="static/videos_cropped/door_ricl_finetune.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">A human perturbs the main object in the scene. Yet, RICL-π₀-FAST-DROID-Finetune completes the task.</p>
+        <hr>
+
+        <!-- Finetune Task 8: pick up the bagel and put it in the toaster -->
+        <h4 class="title is-4 has-text-centered">Task: Pick up the bagel and put it in the toaster</h4>
+        <div class="finetune-video-container">
+          <div class="video-container">
+            <p class="has-text-centered video-label"><strong>RICL-π₀-FAST-DROID-Finetune</strong></p>
+            <video src="static/videos_cropped/bagel_ricl_finetune.mp4" controls></video>
+          </div>
+        </div>
+        <br>
+        <p class="has-text-centered">A human perturbs the main object in the scene. Yet, RICL-π₀-FAST-DROID-Finetune completes the task.</p>
+        <br>
+      </div>
+    </div>
+    <!--/ Dropdown to select results in which problem setting -->
+  </div>
+</section>
+
+
+<style>
+  /* Custom styles for dropdown with black border */
+  .custom-dropdown {
+    border: 1px solid black !important; /* Add !important to ensure it overrides Bulma's styles */
+    padding: 8px;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+  }
+
+  /* Custom styles for the restart button */
+  .restart-button {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* Add hover effect */
+  .restart-button:hover {
+    background-color: #f0f0f0; /* Light gray when hovered */
+  }
+
+  /* Reduce whitespace above each section */
+  .section {
+    padding-top: 0rem; /* Adjust this value to reduce the space above the section */
+  }
+
+  .side-by-side-videos-container {
+    display: flex;
+    justify-content: space-around; /* Adjust as needed: space-between, center, etc. */
+    align-items: flex-start; /* Align items to the top */
+  }
+
+  /* General style for video containers holding a label and video */
+  .video-container {
+    display: flex;
+    flex-direction: column; /* Stack label and video vertically */
+  }
+
+  /* General style for video labels */
+  .video-label {
+    margin-bottom: 0.5em; /* Space between label and video */
+    font-size: 1.1em;
+    font-weight: bold; /* Applied via <strong> in HTML, but good to have here too */
+  }
+
+  /* General style for videos within a .video-container */
+  .video-container video {
+    width: 100%; /* Video takes full width of its .video-container parent */
+  }
+
+  /* Specific width for video containers in the side-by-side section */
+  .side-by-side-videos-container .video-container {
+    width: 48%; /* Adjust width to fit side-by-side, allowing for some gap */
+    /* max-width for video element itself can be specified here if needed, e.g.: */
+    /* video { max-width: 400px; } */
+  }
+
+  .finetune-video-container {
+    display: flex;
+    justify-content: center; /* Center the .video-container within this div */
+    align-items: flex-start;
+  }
+
+  /* Specific width for the video container in the finetune section */
+  .finetune-video-container .video-container {
+    width: 50%; /* This was the original width desired for the video block */
+    /* max-width for video element itself can be specified here if needed, e.g.: */
+    /* video { max-width: 600px; } */
+  }
+
+  /* The old style for #finetune-video video is no longer needed as .video-container handles structure and width */
+  /*
+  #finetune-video video {
+    width: 50%; // Adjust as needed, e.g., 70% or a fixed pixel value
+    // max-width: 600px; // Optional: set a max-width for the video
+  }
+  */
+</style>
+
+
+<script>
+  // All JavaScript functions (updateExperimentsVideos, updateFinetuneVideos) are removed.
+  // The video content is now hardcoded in the HTML.
+</script>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>{
+        TBA
+    }</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/docs/RICL.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/ricl-vla" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            The template for this website was borrowed from <a href="https://nerfies.github.io/">here</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
